@@ -13,7 +13,7 @@ public record LinkUpdateRequest(
         @Min(0)
         Long id,
 
-        @NotBlank
+        @NotNull
         URI url,
 
         @NotBlank

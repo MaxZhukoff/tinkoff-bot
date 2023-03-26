@@ -32,6 +32,6 @@ public class GlobalExceptionHandler{
                 e.getClass().getSimpleName(),
                 e.getMessage(),
                 Arrays.stream(e.getStackTrace()).map(Objects::toString).toList()
-        ), HttpStatus.BAD_REQUEST);
+        ), HttpStatus.NOT_FOUND);
     }
 }
