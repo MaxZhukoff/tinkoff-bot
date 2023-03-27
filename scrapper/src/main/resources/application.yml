@@ -1,4 +1,7 @@
-app.test: 1
+app:
+  test: 1
+  scheduler:
+    interval: 15000
 
 springdoc:
   swagger-ui:
