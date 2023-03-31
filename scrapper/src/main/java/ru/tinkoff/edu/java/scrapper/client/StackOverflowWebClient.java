@@ -14,9 +14,12 @@ public class StackOverflowWebClient {
     private String baseUrl = "https://api.stackexchange.com";
 
     public StackOverflowResponse fetchQuestion(String questionId) {
-        return Objects.requireNonNull(WebClient.builder().build()
+        return Objects.requireNonNull(WebClient.create(baseUrl)
                 .get()
-                .uri(baseUrl + "/2.3/questions/" + questionId + "?site=stackoverflow")
+                .uri(uriBuilder -> uriBuilder
+                        .path("/2.3/questions/{questionId}")
+                        .queryParam("site", "stackoverflow")
+                        .build(questionId))
                 .retrieve()
                 .bodyToMono(StackOverflowItemsResponse.class)
                 .block()).items().get(0);

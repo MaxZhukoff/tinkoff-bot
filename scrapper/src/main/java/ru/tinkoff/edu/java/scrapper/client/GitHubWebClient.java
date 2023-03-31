@@ -11,9 +11,11 @@ public class GitHubWebClient {
     private String baseUrl = "https://api.github.com";
 
     public GitHubResponse fetchRepository(String username, String repository) {
-        return WebClient.builder().build()
+        return WebClient.create(baseUrl)
                 .get()
-                .uri(baseUrl + "/repos/" + username + "/" + repository)
+                .uri(uriBuilder -> uriBuilder
+                        .path("/repos/{username}/{repository}")
+                        .build(username, repository))
                 .retrieve()
                 .bodyToMono(GitHubResponse.class)
                 .block();
