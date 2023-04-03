@@ -1,4 +1,8 @@
-app.test: 1
+app:
+  test: 1
+  bot:
+    token: ${BOT_TOKEN}
+    name: link_tracking_bot
 
 springdoc:
   swagger-ui:
