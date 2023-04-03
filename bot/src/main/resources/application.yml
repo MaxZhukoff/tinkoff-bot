@@ -7,3 +7,6 @@ app:
 springdoc:
   swagger-ui:
     path: swagger-ui
+
+server:
+  port: 8081

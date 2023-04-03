@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.bot.wrapper.command.Command;
 import ru.tinkoff.edu.java.bot.wrapper.command.ReplyCommand;
-import ru.tinkoff.edu.java.bot.wrapper.command.StartCommand;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +22,8 @@ public class UserMessageProcessor {
                 .filter(command -> command.supports(update) || checkReplyCommand(command, update))
                 .findFirst();
         if (maybeCommand.isEmpty()) {
-            return new StartCommand().handle(update);
+            return new SendMessage(update.message().chat().id(),
+                    "Неизвестная команда\nДля получения списка команда напишите /help");
         }
         return maybeCommand.get().handle(update);
     }

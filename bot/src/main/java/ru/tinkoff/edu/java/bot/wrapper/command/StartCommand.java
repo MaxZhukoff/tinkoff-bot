@@ -2,10 +2,15 @@ package ru.tinkoff.edu.java.bot.wrapper.command;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.tinkoff.edu.java.bot.client.ScrapperClient;
 
+@RequiredArgsConstructor
 @Component
 public class StartCommand implements Command {
+    private final ScrapperClient scrapperClient;
+
     @Override
     public String command() {
         return "/start";
@@ -18,8 +23,10 @@ public class StartCommand implements Command {
 
     @Override
     public SendMessage handle(Update update) {
-        return new SendMessage(update.message().chat().id(), String.format(
-                "Привет, %s!%nДля получения списка команд можно написать /help", update.message().chat().username()
-        ));
+        Long chatId = update.message().chat().id();
+        scrapperClient.fetchRegisterChat(chatId);
+        return new SendMessage(chatId, String.format(
+                "Привет, %s!%nДля получения списка команд можно написать /help", update.message().chat().username())
+        );
     }
 }

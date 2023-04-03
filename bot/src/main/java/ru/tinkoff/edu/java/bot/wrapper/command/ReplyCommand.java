@@ -8,6 +8,8 @@ public interface ReplyCommand {
         return update.message().replyToMessage() != null
                 && update.message().replyToMessage().text().equals(replyText());
     }
+
     String replyText();
-    SendMessage replyHandle(Update update);
+
+    SendMessage requestReply(Update update);
 }
