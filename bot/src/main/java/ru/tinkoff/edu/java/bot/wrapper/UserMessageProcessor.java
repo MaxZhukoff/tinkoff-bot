@@ -17,7 +17,7 @@ import java.util.Optional;
 public class UserMessageProcessor {
     private final List<Command> commands;
 
-    SendMessage process(Update update) {
+    public SendMessage process(Update update) {
         Optional<Command> maybeCommand = commands.stream()
                 .filter(command -> command.supports(update) || checkReplyCommand(command, update))
                 .findFirst();
