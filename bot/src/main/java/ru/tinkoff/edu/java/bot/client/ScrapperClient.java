@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.java.bot.client;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.tinkoff.edu.java.bot.dto.AddLinkRequest;
@@ -9,10 +8,9 @@ import ru.tinkoff.edu.java.bot.dto.LinkResponse;
 import ru.tinkoff.edu.java.bot.dto.ListLinksResponse;
 import ru.tinkoff.edu.java.bot.dto.RemoveLinkRequest;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class ScrapperClient {
-    private String baseUrl = "http://localhost:8080";
+    private final String baseUrl;
 
     public void fetchRegisterChat(Long id) {
         WebClient.create(baseUrl)

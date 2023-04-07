@@ -3,6 +3,8 @@ app:
   bot:
     token: ${BOT_TOKEN}
     name: link_tracking_bot
+  scrapper:
+    url: http://localhost:8080
 
 springdoc:
   swagger-ui:

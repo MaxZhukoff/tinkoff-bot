@@ -7,7 +7,7 @@ import ru.tinkoff.edu.java.bot.client.ScrapperClient;
 @Configuration
 public class ClientConfiguration {
     @Bean
-    public ScrapperClient scrapperClient() {
-        return new ScrapperClient();
+    public ScrapperClient scrapperClient(ApplicationConfig config) {
+        return new ScrapperClient(config.scrapper().url());
     }
 }
