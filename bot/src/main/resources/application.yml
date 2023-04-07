@@ -1,5 +1,14 @@
-app.test: 1
+app:
+  test: 1
+  bot:
+    token: ${BOT_TOKEN}
+    name: link_tracking_bot
+  scrapper:
+    url: http://localhost:8080
 
 springdoc:
   swagger-ui:
     path: swagger-ui
+
+server:
+  port: 8081
