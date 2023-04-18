@@ -8,7 +8,8 @@ import java.time.Duration;
 
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-public record ApplicationConfig(@NotNull String test, @NotNull Scheduler scheduler) {
-    record Scheduler(Duration interval) {
-    }
+public record ApplicationConfig(@NotNull String test, @NotNull Scheduler scheduler, @NotNull Bot bot) {
+    record Scheduler(Duration interval, Long checkDelayMinutes) {}
+
+    record Bot(String url) {}
 }
