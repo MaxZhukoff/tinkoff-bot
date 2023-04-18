@@ -41,7 +41,8 @@ public class JdbcLinkService implements LinkService {
 
         long id;
         try {
-            id = linkRepository.add(link, tgChatId, linkDto.updatedAt());
+            id = linkRepository.add(link, tgChatId, linkDto.updatedAt(),
+                    linkDto.lastCommitAt(), linkDto.issuesCount(), linkDto.answerCount());
         } catch (EmptyResultDataAccessException e) {
             id = linkRepository.getLinkId(link);
         }
@@ -63,7 +64,7 @@ public class JdbcLinkService implements LinkService {
 
     @Override
     public Link update(UpdateLinkDto link) {
-        return linkRepository.update(link.id(), link.updatedAt());
+        return linkRepository.update(link.id(), link.updatedAt(), link.lastCommitAt(), link.issuesCount(), link.answerCount());
     }
 
     @Override

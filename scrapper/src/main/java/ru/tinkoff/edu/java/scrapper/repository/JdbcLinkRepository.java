@@ -19,7 +19,7 @@ public class JdbcLinkRepository {
     private final LinkRowMapper linkRowMapper;
 
     private static final String FIND_ALL_LINKS = """
-            SELECT id, url, updated_at, last_check_at FROM link;
+            SELECT * FROM link;
             """;
 
     private static final String INSERT_LINK = """
@@ -28,8 +28,8 @@ public class JdbcLinkRepository {
                     SELECT id FROM link WHERE url = ?
                 ),
                 insert_new_link AS (
-                    INSERT INTO link (url, updated_at, last_check_at)
-                        SELECT ?, ?, (NOW() AT TIME ZONE 'utc')
+                    INSERT INTO link (url, updated_at, last_check_at, last_commit_at, issues_count, answer_count)
+                        SELECT ?, ?, (NOW() AT TIME ZONE 'utc'), ?, ?, ?
                         WHERE NOT EXISTS (SELECT FROM find_link)
                         RETURNING id
                 ),
@@ -68,14 +68,19 @@ public class JdbcLinkRepository {
             """;
 
     private static final String GET_LINKS_NOT_UPDATED = """
-            SELECT id, url, updated_at, last_check_at FROM link
+            SELECT id, url, updated_at, last_check_at, last_commit_at, issues_count, answer_count FROM link
             WHERE last_check_at < ((NOW() AT TIME ZONE 'utc') - ? * interval '1 minutes')::TIMESTAMP;
             """;
 
     private static final String UPDATE_LINK = """
-            UPDATE link SET updated_at = ? AT TIME ZONE 'utc', last_check_at = (NOW() AT TIME ZONE 'utc')
+            UPDATE link
+            SET updated_at = ? AT TIME ZONE 'utc',
+            last_check_at = (NOW() AT TIME ZONE 'utc'),
+            last_commit_at = ?,
+            issues_count = ?,
+            answer_count = ?
                 WHERE id = ?
-            RETURNING id, url, updated_at, last_check_at;
+            RETURNING id, url, updated_at, last_check_at, last_commit_at, issues_count, answer_count;
             """;
 
     private static final String UPDATE_TIME_OF_LAST_CHECK = """
@@ -93,16 +98,20 @@ public class JdbcLinkRepository {
         return jdbcTemplate.query(FIND_ALL_LINKS, linkRowMapper);
     }
 
-    public Long add(String url, Long tgChatId, OffsetDateTime updatedAt) {
-        return jdbcTemplate.queryForObject(INSERT_LINK, Long.class, url, url, updatedAt, tgChatId);
+    public Long add(String url, Long tgChatId, OffsetDateTime updatedAt,
+                    OffsetDateTime lastCommitAt, Integer issuesCount, Integer answerCount) {
+        return jdbcTemplate.queryForObject(INSERT_LINK, Long.class,
+                url, url, updatedAt, lastCommitAt, issuesCount, answerCount, tgChatId);
     }
 
     public Long remove(String url, Long tgChatId) {
         return jdbcTemplate.queryForObject(REMOVE_LINK, Long.class, url, tgChatId);
     }
 
-    public Link update(Long id, OffsetDateTime updatedAt) {
-        return jdbcTemplate.queryForObject(UPDATE_LINK, linkRowMapper, updatedAt, id);
+    public Link update(Long id, OffsetDateTime updatedAt,
+                       OffsetDateTime lastCommitAt, Integer issuesCount, Integer answerCount) {
+        return jdbcTemplate.queryForObject(UPDATE_LINK, linkRowMapper,
+                updatedAt, lastCommitAt, issuesCount, answerCount, id);
     }
 
     public void updateLastCheck(Long id) {

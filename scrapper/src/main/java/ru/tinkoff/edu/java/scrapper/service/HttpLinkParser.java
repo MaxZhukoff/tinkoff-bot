@@ -30,13 +30,25 @@ public class HttpLinkParser {
                         gitHubLinkDto.username(),
                         gitHubLinkDto.repository()
                 );
-                return new LinkDto(link, response.updatedAt());
+                return new LinkDto(
+                        link,
+                        response.updatedAt(),
+                        response.lastCommitAt(),
+                        response.issuesCount(),
+                        null
+                );
 
             } else if (linkDto instanceof StackOverflowLinkDto stackOverflowLinkDto) {
                 StackOverflowResponse response = stackOverflowWebClient.fetchQuestion(
                         String.valueOf(stackOverflowLinkDto.questionId())
                 );
-                return new LinkDto(link, response.updatedAt());
+                return new LinkDto(
+                        link,
+                        response.updatedAt(),
+                        null,
+                        null,
+                        response.answerCount()
+                );
 
             } else
                 throw new ResponseStatusException(BAD_REQUEST, "The link is not supported");

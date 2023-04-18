@@ -4,6 +4,9 @@ import java.time.OffsetDateTime;
 
 public record UpdateLinkDto(
         Long id,
-        OffsetDateTime updatedAt
+        OffsetDateTime updatedAt,
+        OffsetDateTime lastCommitAt,
+        Integer issuesCount,
+        Integer answerCount
 ) {
 }

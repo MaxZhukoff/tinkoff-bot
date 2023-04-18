@@ -41,7 +41,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         String linkUrl = "https://github.com/MaxZhukoff/tinkoff-bot";
         OffsetDateTime updatedAt = OffsetDateTime.now();
 
-        Long linkId = linkRepository.add(linkUrl, tgChatId, updatedAt);
+        Long linkId = linkRepository.add(linkUrl, tgChatId, updatedAt, null, null, null);
 
         Link addedLink = get(linkId);
         assertAll("Assert added link",
@@ -63,7 +63,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         OffsetDateTime lastCheckAt = OffsetDateTime.now(ZoneOffset.UTC);
         add(linkUrl, linkIdInDB, tgChatIdInDB, updatedAt, lastCheckAt);
 
-        Long actualLinkId = linkRepository.add(linkUrl, tgChatIdToAdd, updatedAt);
+        Long actualLinkId = linkRepository.add(linkUrl, tgChatIdToAdd, updatedAt, null, null, null);
 
         Link actualLink = get(actualLinkId);
         assertAll("Assert added link",
@@ -88,7 +88,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         add(linkUrl, linkId, tgChatId, updatedAt, lastCheckAt);
 
         Throwable thrown = assertThrows(EmptyResultDataAccessException.class,
-                () -> linkRepository.add(linkUrl, tgChatId, updatedAt));
+                () -> linkRepository.add(linkUrl, tgChatId, updatedAt, null, null, null));
 
         assertNotNull(thrown.getMessage());
     }
@@ -124,7 +124,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         OffsetDateTime updatedAt = OffsetDateTime.now();
         OffsetDateTime lastCheckAt = OffsetDateTime.now(ZoneOffset.UTC);
         add(linkUrl, linkId, tgChatId1, updatedAt, lastCheckAt);
-        linkRepository.add(linkUrl, tgChatId2, updatedAt);
+        linkRepository.add(linkUrl, tgChatId2, updatedAt, null, null, null);
 
         Long actualLinkId = linkRepository.remove(linkUrl, tgChatId1);
 
@@ -167,7 +167,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
                 2023, 3, 25, 0, 0, 0, 0, ZoneOffset.UTC);
         add(linkUrl, linkId, tgChatId, oldUpdatedAt, lastCheckAt);
 
-        Link actualLink = linkRepository.update(linkId, newUpdatedAt);
+        Link actualLink = linkRepository.update(linkId, newUpdatedAt, null, null, null);
 
         assertAll("Assert updated link",
                 () -> assertEquals(linkUrl, actualLink.getUrl()),
@@ -234,7 +234,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         OffsetDateTime updatedAt = OffsetDateTime.now();
         OffsetDateTime lastCheckAt = OffsetDateTime.now();
         add(linkUrl, linkId, tgChatId1, updatedAt, lastCheckAt);
-        linkRepository.add(linkUrl, tgChatId2, updatedAt);
+        linkRepository.add(linkUrl, tgChatId2, updatedAt, null, null, null);
 
         List<Long> chatIds = linkRepository.getChatsId(linkId);
 

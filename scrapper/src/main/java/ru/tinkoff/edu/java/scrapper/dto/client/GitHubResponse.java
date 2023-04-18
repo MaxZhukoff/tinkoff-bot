@@ -5,10 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.OffsetDateTime;
 
 public record GitHubResponse(
-        Integer id,
-        @JsonProperty("full_name")
-        String fullName,
         @JsonProperty("updated_at")
-        OffsetDateTime updatedAt
+        OffsetDateTime updatedAt,
+        @JsonProperty("pushed_at")
+        OffsetDateTime lastCommitAt,
+        @JsonProperty("open_issues_count")
+        Integer issuesCount
 ) {
 }

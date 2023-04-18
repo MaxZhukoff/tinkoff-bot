@@ -14,4 +14,7 @@ public class Link {
     private String url;
     private OffsetDateTime updatedAt;
     private OffsetDateTime lastCheckAt;
+    private OffsetDateTime lastCommitAt;
+    private Integer issuesCount;
+    private Integer answerCount;
 }

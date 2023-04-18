@@ -23,17 +23,37 @@ public class LinkUpdater {
             LinkDto linkDto = httpLinkParser.parse(l.getUrl());
 
             if (linkDto.updatedAt().isAfter(l.getUpdatedAt())) {
-                Link link = linkService.update(new UpdateLinkDto(l.getId(), linkDto.updatedAt()));
+
+                String description = getUpdateDescription(l, linkDto);
+
+                Link link = linkService.update(new UpdateLinkDto(
+                        l.getId(),
+                        linkDto.updatedAt(),
+                        linkDto.lastCommitAt(),
+                        linkDto.issuesCount(),
+                        linkDto.answerCount()
+                ));
                 sendUpdateToBot(new LinkUpdateRequest(
                         link.getId(),
                         URI.create(link.getUrl()),
-                        "Отслеживаемая ссылка обновилась",
+                        description,
                         linkService.getChatsId(link.getId())
                 ));
             } else {
                 linkService.updateLastCheck(l.getId());
             }
         }
+    }
+
+    private String getUpdateDescription(Link oldLink, LinkDto newLinkDto) {
+        StringBuilder sb = new StringBuilder();
+        if (newLinkDto.lastCommitAt() != null && newLinkDto.lastCommitAt().isAfter(oldLink.getLastCommitAt()))
+            sb.append("Добавлен новый коммит\n");
+        if (newLinkDto.issuesCount() != null && !newLinkDto.issuesCount().equals(oldLink.getIssuesCount()))
+            sb.append("Количество тикетов обновлено\n");
+        if (newLinkDto.answerCount() != null && !newLinkDto.answerCount().equals(oldLink.getAnswerCount()))
+            sb.append("Количество ответов обновлено\n");
+        return sb.length() > 0 ? sb.toString() : "Отслеживаемая ссылка обновилась";
     }
 
     private void sendUpdateToBot(LinkUpdateRequest linkUpdateRequest) {

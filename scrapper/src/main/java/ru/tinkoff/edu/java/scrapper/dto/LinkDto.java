@@ -4,6 +4,9 @@ import java.time.OffsetDateTime;
 
 public record LinkDto(
         String url,
-        OffsetDateTime updatedAt
+        OffsetDateTime updatedAt,
+        OffsetDateTime lastCommitAt,
+        Integer issuesCount,
+        Integer answerCount
 ) {
 }
