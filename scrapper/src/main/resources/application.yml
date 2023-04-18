@@ -6,3 +6,9 @@ app:
 springdoc:
   swagger-ui:
     path: swagger-ui
+
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
