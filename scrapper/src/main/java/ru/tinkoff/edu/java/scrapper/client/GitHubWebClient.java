@@ -3,7 +3,7 @@ package ru.tinkoff.edu.java.scrapper.client;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.tinkoff.edu.java.scrapper.dto.GitHubResponse;
+import ru.tinkoff.edu.java.scrapper.dto.client.GitHubResponse;
 
 @AllArgsConstructor
 @NoArgsConstructor

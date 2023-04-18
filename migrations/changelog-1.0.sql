@@ -3,9 +3,10 @@
 --changeset maxzhukoff:1
 CREATE TABLE IF NOT EXISTS link
 (
-    id  BIGINT PRIMARY KEY,
-    url VARCHAR(255) NOT NULL,
-    updated_at TIMESTAMP NOT NULL
+    id            BIGSERIAL PRIMARY KEY,
+    url           VARCHAR(255) UNIQUE NOT NULL,
+    updated_at    TIMESTAMP    NOT NULL,
+    last_check_at TIMESTAMP    NOT NULL
 );
 
 --changeset maxzhukoff:2

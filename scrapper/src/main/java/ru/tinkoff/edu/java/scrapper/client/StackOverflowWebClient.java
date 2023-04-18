@@ -3,8 +3,8 @@ package ru.tinkoff.edu.java.scrapper.client;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.tinkoff.edu.java.scrapper.dto.StackOverflowItemsResponse;
-import ru.tinkoff.edu.java.scrapper.dto.StackOverflowResponse;
+import ru.tinkoff.edu.java.scrapper.dto.client.StackOverflowItemsResponse;
+import ru.tinkoff.edu.java.scrapper.dto.client.StackOverflowResponse;
 
 import java.util.Objects;
 

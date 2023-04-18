@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.dto;
+package ru.tinkoff.edu.java.scrapper.dto.client;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,6 +13,6 @@ public record StackOverflowResponse(
         @JsonProperty("view_count")
         String viewCount,
         @JsonProperty("last_activity_date")
-        OffsetDateTime lastActivityDate
+        OffsetDateTime updatedAt
 ) {
 }

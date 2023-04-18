@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
-import ru.tinkoff.edu.java.scrapper.dto.ApiErrorResponse;
+import org.springframework.web.server.ResponseStatusException;
+import ru.tinkoff.edu.java.scrapper.dto.controller.ApiErrorResponse;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -24,14 +24,14 @@ public class GlobalExceptionHandler{
         ), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(HttpClientErrorException.NotFound.class)
-    public ResponseEntity<ApiErrorResponse> handleException(HttpClientErrorException.NotFound e)  {
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ApiErrorResponse> handleException(ResponseStatusException e)  {
         return new ResponseEntity<>(new ApiErrorResponse(
-                "Запрашиваемый объект не найден",
-                String.valueOf(404),
+                e.getReason(),
+                e.getStatusCode().toString(),
                 e.getClass().getSimpleName(),
                 e.getMessage(),
                 Arrays.stream(e.getStackTrace()).map(Objects::toString).toList()
-        ), HttpStatus.NOT_FOUND);
+        ), e.getStatusCode());
     }
 }
