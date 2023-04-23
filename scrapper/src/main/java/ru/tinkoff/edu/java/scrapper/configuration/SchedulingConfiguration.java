@@ -11,4 +11,9 @@ public class SchedulingConfiguration {
     public long schedulerInterval(ApplicationConfig config) {
         return config.scheduler().interval().toMillis();
     }
+
+    @Bean
+    public long checkDelayMinutes(ApplicationConfig config) {
+        return config.scheduler().checkDelayMinutes();
+    }
 }

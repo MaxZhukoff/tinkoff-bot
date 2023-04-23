@@ -2,7 +2,16 @@ app:
   test: 1
   scheduler:
     interval: 15000
+    check_delay_minutes: 10
+  bot:
+    url: http://localhost:8081
 
 springdoc:
   swagger-ui:
     path: swagger-ui
+
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}

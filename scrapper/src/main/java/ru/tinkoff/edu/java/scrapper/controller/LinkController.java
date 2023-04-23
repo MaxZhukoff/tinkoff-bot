@@ -6,18 +6,23 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.tinkoff.edu.java.scrapper.dto.*;
+import ru.tinkoff.edu.java.scrapper.dto.controller.*;
+import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
 @ApiResponse(responseCode = "400", description = "Некорректные параметры запроса", content = {
         @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = ApiErrorResponse.class))
 })
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/links")
 public class LinkController {
+    private final LinkService linkService;
+
     @Operation(summary = "Получить все отслеживаемые ссылки")
     @ApiResponse(responseCode = "200", description = "Ссылки успешно получены", content = {
             @Content(
@@ -26,7 +31,8 @@ public class LinkController {
     })
     @GetMapping
     public ResponseEntity<ListLinksResponse> getAllTrackedLinks(@RequestHeader(name = "Tg-Chat-Id") Long id) {
-        return ResponseEntity.status(501).build();
+        linkService.getAllTrackedLinks(id);
+        return ResponseEntity.status(200).body(linkService.getAllTrackedLinks(id));
     }
 
     @Operation(summary = "Добавить отслеживание ссылки")
@@ -40,7 +46,7 @@ public class LinkController {
             @RequestHeader(name = "Tg-Chat-Id") Long id,
             @Valid @RequestBody AddLinkRequest addLinkRequest
     ) {
-        return ResponseEntity.status(501).build();
+        return ResponseEntity.status(200).body(linkService.add(addLinkRequest, id));
     }
 
     @Operation(summary = "Убрать отслеживание ссылки")
@@ -61,6 +67,6 @@ public class LinkController {
             @RequestHeader(name = "Tg-Chat-Id") Long id,
             @Valid @RequestBody RemoveLinkRequest removeLinkRequest
     ) {
-        return ResponseEntity.status(501).build();
+        return ResponseEntity.status(200).body(linkService.remove(removeLinkRequest, id));
     }
 }

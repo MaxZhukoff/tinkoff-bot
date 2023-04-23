@@ -1,3 +1,5 @@
+package ru.tinkoff.edu.java.scrapper;
+
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +23,7 @@ public class IntegrationEnvironmentTest extends IntegrationEnvironment {
         ResultSet resultSet = metaData.getTables(null, "public", "%", null);
         while (resultSet.next()) {
             String tableName = resultSet.getString("TABLE_NAME");
+            System.out.println(tableName);
             actualTablesSet.add(tableName);
         }
 
