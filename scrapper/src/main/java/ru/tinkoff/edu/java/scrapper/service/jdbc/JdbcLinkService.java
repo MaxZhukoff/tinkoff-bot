@@ -2,7 +2,6 @@ package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.tinkoff.edu.java.scrapper.dto.LinkDto;
@@ -26,7 +25,6 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
-@Service
 public class JdbcLinkService implements LinkService {
     private final HttpLinkParser httpLinkParser;
     private final JdbcLinkRepository linkRepository;

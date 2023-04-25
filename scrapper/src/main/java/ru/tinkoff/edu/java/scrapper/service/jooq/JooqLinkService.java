@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
 import org.jooq.Record;
-import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.tinkoff.edu.java.scrapper.dto.LinkDto;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateLinkDto;
@@ -27,7 +26,6 @@ import static org.jooq.impl.DSL.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RequiredArgsConstructor
-@Service
 public class JooqLinkService implements LinkService {
     private final HttpLinkParser httpLinkParser;
     private final DSLContext dslContext;

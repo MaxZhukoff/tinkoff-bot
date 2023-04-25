@@ -1,8 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.service.jpa;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.tinkoff.edu.java.scrapper.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.repository.JpaTgChatRepository;
@@ -11,8 +9,6 @@ import ru.tinkoff.edu.java.scrapper.service.TgChatService;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
-@Primary
-@Service
 public class JpaTgChatService implements TgChatService {
     private final JpaTgChatRepository tgChatRepository;
 

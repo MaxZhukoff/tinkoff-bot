@@ -2,8 +2,6 @@ package ru.tinkoff.edu.java.scrapper.service.jpa;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.tinkoff.edu.java.scrapper.dto.LinkDto;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateLinkDto;
@@ -31,8 +29,6 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
-@Primary
-@Service
 public class JpaLinkService implements LinkService {
     private final HttpLinkParser httpLinkParser;
     private final LinkMapper linkMapper;
