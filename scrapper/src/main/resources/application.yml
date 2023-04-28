@@ -5,6 +5,7 @@ app:
     check_delay_minutes: 10
   bot:
     url: http://localhost:8081
+  database-access-type: jpa
 
 springdoc:
   swagger-ui:

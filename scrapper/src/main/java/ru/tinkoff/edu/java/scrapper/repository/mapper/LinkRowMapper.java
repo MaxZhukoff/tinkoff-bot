@@ -22,7 +22,8 @@ public class LinkRowMapper implements RowMapper<Link> {
                         ? OffsetDateTime.of(rs.getTimestamp("last_commit_at").toLocalDateTime(), ZoneOffset.UTC)
                         : null,
                 rs.getInt("issues_count"),
-                rs.getInt("answer_count")
+                rs.getInt("answer_count"),
+                null
         );
     }
 }
