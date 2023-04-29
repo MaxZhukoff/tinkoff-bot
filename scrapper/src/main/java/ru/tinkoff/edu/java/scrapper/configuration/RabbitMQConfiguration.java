@@ -1,9 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.configuration;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
@@ -20,13 +17,15 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public DirectExchange directExchange() {
+    public DirectExchange exchange() {
         return new DirectExchange(exchangeName, true, false);
     }
 
     @Bean
     public Queue queue() {
-        return new Queue(queueName);
+        return QueueBuilder.durable(queueName)
+                .withArgument("x-dead-letter-exchange", queueName + ".dlq")
+                .build();
     }
 
     @Bean
