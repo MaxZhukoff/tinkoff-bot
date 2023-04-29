@@ -5,6 +5,9 @@ app:
     name: link_tracking_bot
   scrapper:
     url: http://localhost:8080
+  rabbitmq:
+    exchange-name: exchange
+    queue-name: queue
 
 springdoc:
   swagger-ui:
