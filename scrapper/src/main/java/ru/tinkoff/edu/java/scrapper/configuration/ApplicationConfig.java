@@ -13,7 +13,8 @@ public record ApplicationConfig(
         @NotNull Scheduler scheduler,
         @NotNull Bot bot,
         @NotNull RabbitMQ rabbitMQ,
-        @NotNull AccessType databaseAccessType
+        @NotNull AccessType databaseAccessType,
+        @NotNull Boolean useQueue
 ) {
     record Scheduler(Duration interval, Long checkDelayMinutes) {}
 

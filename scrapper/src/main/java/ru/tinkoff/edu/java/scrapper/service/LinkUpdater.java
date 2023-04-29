@@ -2,11 +2,11 @@ package ru.tinkoff.edu.java.scrapper.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.tinkoff.edu.java.scrapper.client.BotWebClient;
 import ru.tinkoff.edu.java.scrapper.dto.LinkDto;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateLinkDto;
 import ru.tinkoff.edu.java.scrapper.dto.client.LinkUpdateRequest;
 import ru.tinkoff.edu.java.scrapper.entity.Link;
+import ru.tinkoff.edu.java.scrapper.service.sender.UpdateSender;
 
 import java.net.URI;
 
@@ -16,7 +16,7 @@ public class LinkUpdater {
     private final Long checkDelayMinutes;
     private final LinkService linkService;
     private final HttpLinkParser httpLinkParser;
-    private final BotWebClient botWebClient;
+    private final UpdateSender updateSender;
 
     public void update() {
         for (Link l : linkService.getAllLinksNotUpdatedAt(checkDelayMinutes)) {
@@ -33,7 +33,7 @@ public class LinkUpdater {
                         linkDto.issuesCount(),
                         linkDto.answerCount()
                 ));
-                sendUpdateToBot(new LinkUpdateRequest(
+                updateSender.sendUpdate(new LinkUpdateRequest(
                         link.getId(),
                         URI.create(link.getUrl()),
                         description,
@@ -54,9 +54,5 @@ public class LinkUpdater {
         if (newLinkDto.answerCount() != null && !newLinkDto.answerCount().equals(oldLink.getAnswerCount()))
             sb.append("Количество ответов обновлено\n");
         return sb.length() > 0 ? sb.toString() : "Отслеживаемая ссылка обновилась";
-    }
-
-    private void sendUpdateToBot(LinkUpdateRequest linkUpdateRequest) {
-        botWebClient.sendUpdate(linkUpdateRequest);
     }
 }
