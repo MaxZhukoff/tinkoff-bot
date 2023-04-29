@@ -12,7 +12,6 @@ public class ScrapperQueueProducer {
     private final RabbitTemplate rabbitTemplate;
     private final Queue queue;
 
-
     public void send(LinkUpdateRequest linkUpdateRequest) {
         rabbitTemplate.convertAndSend(queue.getName(), linkUpdateRequest);
     }

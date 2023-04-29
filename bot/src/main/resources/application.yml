@@ -6,8 +6,8 @@ app:
   scrapper:
     url: http://localhost:8080
   rabbitmq:
-    exchange-name: exchange
-    queue-name: queue
+    exchange-name: link-exchange
+    queue-name: link-queue
 
 springdoc:
   swagger-ui:
