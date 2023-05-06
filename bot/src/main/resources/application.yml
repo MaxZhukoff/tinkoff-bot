@@ -5,6 +5,9 @@ app:
     name: link_tracking_bot
   scrapper:
     url: http://localhost:8080
+  rabbitmq:
+    exchange-name: link-exchange
+    queue-name: link-queue
 
 springdoc:
   swagger-ui:
@@ -12,3 +15,9 @@ springdoc:
 
 server:
   port: 8081
+
+spring:
+  rabbitmq:
+    listener:
+      simple:
+        default-requeue-rejected: false

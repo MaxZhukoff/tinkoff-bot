@@ -6,6 +6,10 @@ app:
   bot:
     url: http://localhost:8081
   database-access-type: jpa
+  use-queue: true
+  rabbitmq:
+    exchange-name: link-exchange
+    queue-name: link-queue
 
 springdoc:
   swagger-ui:

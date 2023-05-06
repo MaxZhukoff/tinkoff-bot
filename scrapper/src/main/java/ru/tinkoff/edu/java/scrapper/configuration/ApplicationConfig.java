@@ -12,11 +12,15 @@ public record ApplicationConfig(
         @NotNull String test,
         @NotNull Scheduler scheduler,
         @NotNull Bot bot,
-        @NotNull AccessType databaseAccessType
+        @NotNull RabbitMQ rabbitMQ,
+        @NotNull AccessType databaseAccessType,
+        @NotNull Boolean useQueue
 ) {
     record Scheduler(Duration interval, Long checkDelayMinutes) {}
 
     record Bot(String url) {}
+
+    record RabbitMQ(String exchangeName, String queueName) {}
 
     public enum AccessType {
         JDBC, JPA, JOOQ
