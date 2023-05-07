@@ -11,6 +11,7 @@ import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
 @Service
 public class LinkUpdaterScheduler {
     private final LinkUpdater linkUpdater;
+
     @Scheduled(fixedDelayString = "#{@schedulerInterval}")
     public void update() {
         linkUpdater.update();

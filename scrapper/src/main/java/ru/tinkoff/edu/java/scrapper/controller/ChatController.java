@@ -7,15 +7,20 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.tinkoff.edu.java.scrapper.dto.controller.ApiErrorResponse;
 import ru.tinkoff.edu.java.scrapper.service.TgChatService;
 
 @ApiResponse(responseCode = "400", description = "Некорректные параметры запроса", content = {
-        @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = ApiErrorResponse.class))
+    @Content(
+        mediaType = "application/json",
+        schema = @Schema(implementation = ApiErrorResponse.class))
 })
 @RequiredArgsConstructor
 @RestController
@@ -28,21 +33,21 @@ public class ChatController {
     @PostMapping
     public ResponseEntity<Void> registerChat(@PathVariable @Min(0) Long id) {
         chatService.register(id);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Operation(summary = "Удалить чат")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Чат успешно удалён"),
-            @ApiResponse(responseCode = "404", description = "Чат не существует", content = {
-                    @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = ApiErrorResponse.class))
-            })
+        @ApiResponse(responseCode = "200", description = "Чат успешно удалён"),
+        @ApiResponse(responseCode = "404", description = "Чат не существует", content = {
+            @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = ApiErrorResponse.class))
+        })
     })
     @DeleteMapping
     public ResponseEntity<Void> deleteChat(@PathVariable @Min(0) Long id) {
         chatService.unregister(id);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

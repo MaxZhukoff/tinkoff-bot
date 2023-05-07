@@ -1,26 +1,24 @@
 package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.tinkoff.edu.java.scrapper.dto.LinkDto;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateLinkDto;
-import ru.tinkoff.edu.java.scrapper.entity.Link;
 import ru.tinkoff.edu.java.scrapper.dto.controller.AddLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.controller.LinkResponse;
 import ru.tinkoff.edu.java.scrapper.dto.controller.ListLinksResponse;
 import ru.tinkoff.edu.java.scrapper.dto.controller.RemoveLinkRequest;
+import ru.tinkoff.edu.java.scrapper.entity.Link;
 import ru.tinkoff.edu.java.scrapper.repository.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.service.HttpLinkParser;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
-
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.List;
-
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -40,7 +38,8 @@ public class JdbcLinkService implements LinkService {
         long id;
         try {
             id = linkRepository.add(link, tgChatId, linkDto.updatedAt(),
-                    linkDto.lastCommitAt(), linkDto.issuesCount(), linkDto.answerCount());
+                linkDto.lastCommitAt(), linkDto.issuesCount(), linkDto.answerCount()
+            );
         } catch (EmptyResultDataAccessException e) {
             id = linkRepository.getLinkId(link);
         }
@@ -62,7 +61,13 @@ public class JdbcLinkService implements LinkService {
 
     @Override
     public Link update(UpdateLinkDto link) {
-        return linkRepository.update(link.id(), link.updatedAt(), link.lastCommitAt(), link.issuesCount(), link.answerCount());
+        return linkRepository.update(
+            link.id(),
+            link.updatedAt(),
+            link.lastCommitAt(),
+            link.issuesCount(),
+            link.answerCount()
+        );
     }
 
     @Override

@@ -5,7 +5,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.server.ResponseStatusException;
 import ru.tinkoff.edu.java.scrapper.repository.JdbcTgChatRepository;
 import ru.tinkoff.edu.java.scrapper.service.TgChatService;
-
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
@@ -24,6 +23,5 @@ public class JdbcTgChatService implements TgChatService {
         } catch (EmptyResultDataAccessException e) {
             throw new ResponseStatusException(NOT_FOUND, "Chat not found");
         }
-
     }
 }
