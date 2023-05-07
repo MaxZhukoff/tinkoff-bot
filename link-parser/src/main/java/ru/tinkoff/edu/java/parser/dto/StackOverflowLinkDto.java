@@ -1,6 +1,6 @@
 package ru.tinkoff.edu.java.parser.dto;
 
 public record StackOverflowLinkDto(
-        int questionId
+    int questionId
 ) implements LinkDto {
 }
