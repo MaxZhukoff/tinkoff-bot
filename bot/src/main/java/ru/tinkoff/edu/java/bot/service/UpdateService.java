@@ -13,13 +13,14 @@ public class UpdateService {
 
     public void handleUpdate(LinkUpdateRequest linkUpdateRequest) {
         linkUpdateRequest.tgChatIds().forEach(
-                tgChatId -> botUpdateListener.execute(
-                        new SendMessage(
-                                tgChatId,
-                                String.format("Ваша ссылка: %s обновилась%n%s",
-                                        linkUpdateRequest.url(), linkUpdateRequest.description())
-                        ).disableWebPagePreview(true)
-                )
+            tgChatId -> botUpdateListener.execute(
+                new SendMessage(
+                    tgChatId,
+                    String.format("Ваша ссылка: %s обновилась%n%s",
+                        linkUpdateRequest.url(), linkUpdateRequest.description()
+                    )
+                ).disableWebPagePreview(true)
+            )
         );
     }
 }

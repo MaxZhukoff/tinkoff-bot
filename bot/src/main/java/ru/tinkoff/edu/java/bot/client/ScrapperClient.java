@@ -17,55 +17,55 @@ public class ScrapperClient {
 
     public void fetchRegisterChat(Long id) {
         WebClient.create(baseUrl)
-                .post()
-                .uri(uriBuilder -> uriBuilder
-                        .path(TG_CHAT_PATH)
-                        .build(id))
-                .retrieve()
-                .bodyToMono(Void.class)
-                .block();
+            .post()
+            .uri(uriBuilder -> uriBuilder
+                .path(TG_CHAT_PATH)
+                .build(id))
+            .retrieve()
+            .bodyToMono(Void.class)
+            .block();
     }
 
     public void fetchDeleteChat(Long id) {
         WebClient.create(baseUrl)
-                .delete()
-                .uri(uriBuilder -> uriBuilder
-                        .path(TG_CHAT_PATH)
-                        .build(id))
-                .retrieve()
-                .bodyToMono(Void.class)
-                .block();
+            .delete()
+            .uri(uriBuilder -> uriBuilder
+                .path(TG_CHAT_PATH)
+                .build(id))
+            .retrieve()
+            .bodyToMono(Void.class)
+            .block();
     }
 
     public ListLinksResponse fetchGetAllTrackedLinks(Long id) {
         return WebClient.create(baseUrl)
-                .get()
-                .uri(LINKS_URI)
-                .header(TG_CHAT_ID_HEADER, String.valueOf(id))
-                .retrieve()
-                .bodyToMono(ListLinksResponse.class)
-                .block();
+            .get()
+            .uri(LINKS_URI)
+            .header(TG_CHAT_ID_HEADER, String.valueOf(id))
+            .retrieve()
+            .bodyToMono(ListLinksResponse.class)
+            .block();
     }
 
     public LinkResponse fetchAddLinkTracking(Long id, AddLinkRequest addLinkRequest) {
         return WebClient.create(baseUrl)
-                .post()
-                .uri(LINKS_URI)
-                .header(TG_CHAT_ID_HEADER, String.valueOf(id))
-                .bodyValue(addLinkRequest)
-                .retrieve()
-                .bodyToMono(LinkResponse.class)
-                .block();
+            .post()
+            .uri(LINKS_URI)
+            .header(TG_CHAT_ID_HEADER, String.valueOf(id))
+            .bodyValue(addLinkRequest)
+            .retrieve()
+            .bodyToMono(LinkResponse.class)
+            .block();
     }
 
     public LinkResponse fetchRemoveLinkTracking(Long id, RemoveLinkRequest removeLinkRequest) {
         return WebClient.create(baseUrl)
-                .method(HttpMethod.DELETE)
-                .uri(LINKS_URI)
-                .header(TG_CHAT_ID_HEADER, String.valueOf(id))
-                .bodyValue(removeLinkRequest)
-                .retrieve()
-                .bodyToMono(LinkResponse.class)
-                .block();
+            .method(HttpMethod.DELETE)
+            .uri(LINKS_URI)
+            .header(TG_CHAT_ID_HEADER, String.valueOf(id))
+            .bodyValue(removeLinkRequest)
+            .retrieve()
+            .bodyToMono(LinkResponse.class)
+            .block();
     }
 }

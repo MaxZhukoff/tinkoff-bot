@@ -18,11 +18,13 @@ public class UserMessageProcessor {
 
     public SendMessage process(Update update) {
         Optional<Command> maybeCommand = commands.stream()
-                .filter(command -> command.supports(update) || checkReplyCommand(command, update))
-                .findFirst();
+            .filter(command -> command.supports(update) || checkReplyCommand(command, update))
+            .findFirst();
         if (maybeCommand.isEmpty()) {
-            return new SendMessage(update.message().chat().id(),
-                    "Неизвестная команда\nДля получения списка команда напишите /help");
+            return new SendMessage(
+                update.message().chat().id(),
+                "Неизвестная команда\nДля получения списка команда напишите /help"
+            );
         }
         return maybeCommand.get().handle(update);
     }

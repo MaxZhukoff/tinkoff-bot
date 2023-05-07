@@ -14,11 +14,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleArgumentNotValidException(MethodArgumentNotValidException e) {
         return new ResponseEntity<>(new ApiErrorResponse(
-                "Некорректные параметры запроса",
-                String.valueOf(e.getStatusCode().value()),
-                e.getClass().getSimpleName(),
-                e.getMessage(),
-                Arrays.stream(e.getStackTrace()).map(Objects::toString).toList()
+            "Некорректные параметры запроса",
+            String.valueOf(e.getStatusCode().value()),
+            e.getClass().getSimpleName(),
+            e.getMessage(),
+            Arrays.stream(e.getStackTrace()).map(Objects::toString).toList()
         ), HttpStatus.BAD_REQUEST);
     }
 }

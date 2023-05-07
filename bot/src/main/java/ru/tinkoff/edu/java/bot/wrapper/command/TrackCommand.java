@@ -32,13 +32,13 @@ public class TrackCommand implements Command, ReplyCommand {
     @Override
     public SendMessage requestReply(Update update) {
         return new SendMessage(update.message().chat().id(), replyText())
-                .replyMarkup(new ForceReply());
+            .replyMarkup(new ForceReply());
     }
 
     @Override
     public SendMessage handle(Update update) {
         if (!canProcessReply(update)) {
-           return requestReply(update);
+            return requestReply(update);
         }
 
         Long id = update.message().chat().id();

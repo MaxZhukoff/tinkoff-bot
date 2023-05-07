@@ -36,16 +36,16 @@ public class RabbitMQConfiguration {
     @Bean
     public Queue queue() {
         return QueueBuilder.durable(queueName)
-                .withArgument("x-dead-letter-exchange", queueName + DEAD_LETTER_SUFFIX)
-                .build();
+            .withArgument("x-dead-letter-exchange", queueName + DEAD_LETTER_SUFFIX)
+            .build();
     }
 
     @Bean
     public Binding binding(Queue queue, DirectExchange exchange) {
         return BindingBuilder
-                .bind(queue)
-                .to(exchange)
-                .withQueueName();
+            .bind(queue)
+            .to(exchange)
+            .withQueueName();
     }
 
     @Bean
@@ -61,8 +61,8 @@ public class RabbitMQConfiguration {
     @Bean
     public Binding deadLetterBinding(Queue deadLetterQueue, FanoutExchange deadLetterExchange) {
         return BindingBuilder
-                .bind(deadLetterQueue)
-                .to(deadLetterExchange);
+            .bind(deadLetterQueue)
+            .to(deadLetterExchange);
     }
 
     @Bean

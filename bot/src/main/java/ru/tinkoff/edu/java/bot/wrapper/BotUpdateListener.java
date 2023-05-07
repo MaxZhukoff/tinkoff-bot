@@ -31,8 +31,8 @@ public class BotUpdateListener implements AutoCloseable, UpdatesListener {
 
     private SetMyCommands buildSetCommandsRequest() {
         BotCommand[] botCommands = userMessageProcessor.getCommands().stream()
-                .map(command -> new BotCommand(command.command(), command.description()))
-                .toArray(BotCommand[]::new);
+            .map(command -> new BotCommand(command.command(), command.description()))
+            .toArray(BotCommand[]::new);
         return new SetMyCommands(botCommands);
     }
 

@@ -17,9 +17,9 @@ import ru.tinkoff.edu.java.bot.dto.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.service.UpdateService;
 
 @ApiResponse(responseCode = "400", description = "Некорректные параметры запроса", content = {
-        @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = ApiErrorResponse.class))
+    @Content(
+        mediaType = "application/json",
+        schema = @Schema(implementation = ApiErrorResponse.class))
 })
 @RequiredArgsConstructor
 @RestController

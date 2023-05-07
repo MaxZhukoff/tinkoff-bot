@@ -8,17 +8,17 @@ import java.net.URI;
 import java.util.List;
 
 public record LinkUpdateRequest(
-        @NotNull
-        @Min(0)
-        Long id,
+    @NotNull
+    @Min(0)
+    Long id,
 
-        @NotNull
-        URI url,
+    @NotNull
+    URI url,
 
-        @NotBlank
-        String description,
+    @NotBlank
+    String description,
 
-        @NotEmpty
-        List<@NotNull @Min(0) Long> tgChatIds
+    @NotEmpty
+    List<@NotNull @Min(0) Long> tgChatIds
 ) {
 }

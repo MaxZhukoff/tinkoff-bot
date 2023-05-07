@@ -30,9 +30,11 @@ public class ListCommand implements Command {
 
         String messageText;
         if (links.isEmpty()) {
-            messageText = String.format("%s%n%s",
-                    "Вы не отслеживаете ни одной ссылки!",
-                    "Для добавление ссылки в список отслеживаемых напишите /track");
+            messageText = String.format(
+                "%s%n%s",
+                "Вы не отслеживаете ни одной ссылки!",
+                "Для добавление ссылки в список отслеживаемых напишите /track"
+            );
         } else {
             StringBuilder sb = new StringBuilder("Список ваших отслеживаемых ссылок:\n");
             links.stream().map(LinkResponse::url).forEach(link -> sb.append(String.format("%s%n", link)));

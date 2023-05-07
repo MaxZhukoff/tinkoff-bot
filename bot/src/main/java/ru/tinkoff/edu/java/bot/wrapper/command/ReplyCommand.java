@@ -6,7 +6,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 public interface ReplyCommand {
     default boolean canProcessReply(Update update) {
         return update.message().replyToMessage() != null
-                && update.message().replyToMessage().text().equals(replyText());
+            && update.message().replyToMessage().text().equals(replyText());
     }
 
     String replyText();
