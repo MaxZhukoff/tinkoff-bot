@@ -3,12 +3,11 @@ package ru.tinkoff.edu.java.bot.wrapper.command;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ForceReply;
 import com.pengrad.telegrambot.request.SendMessage;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.bot.client.ScrapperClient;
 import ru.tinkoff.edu.java.bot.dto.AddLinkRequest;
-
-import java.net.URI;
 
 @Component
 @RequiredArgsConstructor

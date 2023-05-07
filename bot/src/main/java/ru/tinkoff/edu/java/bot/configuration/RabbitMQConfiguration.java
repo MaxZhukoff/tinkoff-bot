@@ -1,6 +1,13 @@
 package ru.tinkoff.edu.java.bot.configuration;
 
-import org.springframework.amqp.core.*;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.support.converter.ClassMapper;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -9,13 +16,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.tinkoff.edu.java.bot.dto.LinkUpdateRequest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Configuration
 public class RabbitMQConfiguration {
     private final String exchangeName;
     private final String queueName;
+
+    private static final String DEAD_LETTER_SUFFIX = ".dlq";
 
     public RabbitMQConfiguration(ApplicationConfig config) {
         this.exchangeName = config.rabbitMQ().exchangeName();
@@ -30,7 +36,7 @@ public class RabbitMQConfiguration {
     @Bean
     public Queue queue() {
         return QueueBuilder.durable(queueName)
-                .withArgument("x-dead-letter-exchange", queueName + ".dlq")
+                .withArgument("x-dead-letter-exchange", queueName + DEAD_LETTER_SUFFIX)
                 .build();
     }
 
@@ -44,12 +50,12 @@ public class RabbitMQConfiguration {
 
     @Bean
     public FanoutExchange deadLetterExchange() {
-        return new FanoutExchange(queueName + ".dlq", true, false);
+        return new FanoutExchange(queueName + DEAD_LETTER_SUFFIX, true, false);
     }
 
     @Bean
     public Queue deadLetterQueue() {
-        return QueueBuilder.durable(queueName + ".dlq").build();
+        return QueueBuilder.durable(queueName + DEAD_LETTER_SUFFIX).build();
     }
 
     @Bean
@@ -60,7 +66,7 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public ClassMapper classMapper(){
+    public ClassMapper classMapper() {
         Map<String, Class<?>> mappings = new HashMap<>();
         mappings.put("ru.tinkoff.edu.java.scrapper.dto.client.LinkUpdateRequest", LinkUpdateRequest.class);
 
@@ -71,7 +77,7 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public MessageConverter jsonMessageConverter(ClassMapper classMapper){
+    public MessageConverter jsonMessageConverter(ClassMapper classMapper) {
         Jackson2JsonMessageConverter jsonConverter = new Jackson2JsonMessageConverter();
         jsonConverter.setClassMapper(classMapper);
         return jsonConverter;

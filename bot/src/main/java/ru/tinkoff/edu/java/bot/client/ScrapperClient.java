@@ -11,12 +11,15 @@ import ru.tinkoff.edu.java.bot.dto.RemoveLinkRequest;
 @RequiredArgsConstructor
 public class ScrapperClient {
     private final String baseUrl;
+    private static final String TG_CHAT_PATH = "/tg-chat/{id}";
+    private static final String LINKS_URI = "/links";
+    private static final String TG_CHAT_ID_HEADER = "Tg-Chat-Id";
 
     public void fetchRegisterChat(Long id) {
         WebClient.create(baseUrl)
                 .post()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/tg-chat/{id}")
+                        .path(TG_CHAT_PATH)
                         .build(id))
                 .retrieve()
                 .bodyToMono(Void.class)
@@ -27,7 +30,7 @@ public class ScrapperClient {
         WebClient.create(baseUrl)
                 .delete()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/tg-chat/{id}")
+                        .path(TG_CHAT_PATH)
                         .build(id))
                 .retrieve()
                 .bodyToMono(Void.class)
@@ -37,8 +40,8 @@ public class ScrapperClient {
     public ListLinksResponse fetchGetAllTrackedLinks(Long id) {
         return WebClient.create(baseUrl)
                 .get()
-                .uri("/links")
-                .header("Tg-Chat-Id", String.valueOf(id))
+                .uri(LINKS_URI)
+                .header(TG_CHAT_ID_HEADER, String.valueOf(id))
                 .retrieve()
                 .bodyToMono(ListLinksResponse.class)
                 .block();
@@ -47,8 +50,8 @@ public class ScrapperClient {
     public LinkResponse fetchAddLinkTracking(Long id, AddLinkRequest addLinkRequest) {
         return WebClient.create(baseUrl)
                 .post()
-                .uri("/links")
-                .header("Tg-Chat-Id", String.valueOf(id))
+                .uri(LINKS_URI)
+                .header(TG_CHAT_ID_HEADER, String.valueOf(id))
                 .bodyValue(addLinkRequest)
                 .retrieve()
                 .bodyToMono(LinkResponse.class)
@@ -58,8 +61,8 @@ public class ScrapperClient {
     public LinkResponse fetchRemoveLinkTracking(Long id, RemoveLinkRequest removeLinkRequest) {
         return WebClient.create(baseUrl)
                 .method(HttpMethod.DELETE)
-                .uri("/links")
-                .header("Tg-Chat-Id", String.valueOf(id))
+                .uri(LINKS_URI)
+                .header(TG_CHAT_ID_HEADER, String.valueOf(id))
                 .bodyValue(removeLinkRequest)
                 .retrieve()
                 .bodyToMono(LinkResponse.class)
