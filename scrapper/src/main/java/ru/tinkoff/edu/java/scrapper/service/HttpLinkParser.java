@@ -12,7 +12,6 @@ import ru.tinkoff.edu.java.scrapper.client.StackOverflowWebClient;
 import ru.tinkoff.edu.java.scrapper.dto.LinkDto;
 import ru.tinkoff.edu.java.scrapper.dto.client.GitHubResponse;
 import ru.tinkoff.edu.java.scrapper.dto.client.StackOverflowResponse;
-
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RequiredArgsConstructor
@@ -27,31 +26,32 @@ public class HttpLinkParser {
         try {
             if (linkDto instanceof GitHubLinkDto gitHubLinkDto) {
                 GitHubResponse response = gitHubWebClient.fetchRepository(
-                        gitHubLinkDto.username(),
-                        gitHubLinkDto.repository()
+                    gitHubLinkDto.username(),
+                    gitHubLinkDto.repository()
                 );
                 return new LinkDto(
-                        link,
-                        response.updatedAt(),
-                        response.lastCommitAt(),
-                        response.issuesCount(),
-                        null
+                    link,
+                    response.updatedAt(),
+                    response.lastCommitAt(),
+                    response.issuesCount(),
+                    null
                 );
 
             } else if (linkDto instanceof StackOverflowLinkDto stackOverflowLinkDto) {
                 StackOverflowResponse response = stackOverflowWebClient.fetchQuestion(
-                        String.valueOf(stackOverflowLinkDto.questionId())
+                    String.valueOf(stackOverflowLinkDto.questionId())
                 );
                 return new LinkDto(
-                        link,
-                        response.updatedAt(),
-                        null,
-                        null,
-                        response.answerCount()
+                    link,
+                    response.updatedAt(),
+                    null,
+                    null,
+                    response.answerCount()
                 );
 
-            } else
+            } else {
                 throw new ResponseStatusException(BAD_REQUEST, "The link is not supported");
+            }
 
         } catch (WebClientResponseException e) {
             throw new ResponseStatusException(BAD_REQUEST, "Incorrect link");

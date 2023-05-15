@@ -10,11 +10,11 @@ public class BotWebClient {
 
     public void sendUpdate(LinkUpdateRequest body) {
         WebClient.create(baseUrl)
-                .post()
-                .uri("/updates")
-                .bodyValue(body)
-                .retrieve()
-                .bodyToMono(Void.class)
-                .block();
+            .post()
+            .uri("/updates")
+            .bodyValue(body)
+            .retrieve()
+            .bodyToMono(Void.class)
+            .block();
     }
 }

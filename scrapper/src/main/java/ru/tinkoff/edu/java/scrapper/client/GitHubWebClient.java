@@ -12,12 +12,12 @@ public class GitHubWebClient {
 
     public GitHubResponse fetchRepository(String username, String repository) {
         return WebClient.create(baseUrl)
-                .get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/repos/{username}/{repository}")
-                        .build(username, repository))
-                .retrieve()
-                .bodyToMono(GitHubResponse.class)
-                .block();
+            .get()
+            .uri(uriBuilder -> uriBuilder
+                .path("/repos/{username}/{repository}")
+                .build(username, repository))
+            .retrieve()
+            .bodyToMono(GitHubResponse.class)
+            .block();
     }
 }

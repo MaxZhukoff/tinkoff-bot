@@ -17,10 +17,10 @@ import ru.tinkoff.edu.java.scrapper.service.jpa.JpaTgChatService;
 public class JpaAccessConfiguration {
     @Bean
     public LinkService linkService(
-            HttpLinkParser httpLinkParser,
-            LinkMapper linkMapper,
-            JpaLinkRepository linkRepository,
-            JpaTgChatRepository tgChatRepository
+        HttpLinkParser httpLinkParser,
+        LinkMapper linkMapper,
+        JpaLinkRepository linkRepository,
+        JpaTgChatRepository tgChatRepository
     ) {
         return new JpaLinkService(httpLinkParser, linkMapper, linkRepository, tgChatRepository);
     }

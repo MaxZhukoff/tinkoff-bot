@@ -26,7 +26,7 @@ public class StartCommand implements Command {
         Long chatId = update.message().chat().id();
         scrapperClient.fetchRegisterChat(chatId);
         return new SendMessage(chatId, String.format(
-                "Привет, %s!%nДля получения списка команд можно написать /help", update.message().chat().username())
+            "Привет, %s!%nДля получения списка команд можно написать /help", update.message().chat().username())
         );
     }
 }

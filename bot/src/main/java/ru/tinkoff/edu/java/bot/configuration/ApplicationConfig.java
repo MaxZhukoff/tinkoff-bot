@@ -7,14 +7,17 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 public record ApplicationConfig(
-        @NotNull String test,
-        @NotNull Bot bot,
-        @NotNull Scrapper scrapper,
-        @NotNull RabbitMQ rabbitMQ
+    @NotNull String test,
+    @NotNull Bot bot,
+    @NotNull Scrapper scrapper,
+    @NotNull RabbitMQ rabbitMQ
 ) {
-    record Bot(String token, String name) {}
+    record Bot(String token, String name) {
+    }
 
-    record Scrapper(String url) {}
+    record Scrapper(String url) {
+    }
 
-    record RabbitMQ(String exchangeName, String queueName) {}
+    record RabbitMQ(String exchangeName, String queueName) {
+    }
 }
