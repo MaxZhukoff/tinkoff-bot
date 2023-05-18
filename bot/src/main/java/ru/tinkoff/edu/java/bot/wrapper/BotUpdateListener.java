@@ -12,6 +12,7 @@ import jakarta.annotation.PreDestroy;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.tinkoff.edu.java.bot.metric.BotProcessorMetric;
 
 @RequiredArgsConstructor
 @Component
@@ -25,7 +26,10 @@ public class BotUpdateListener implements AutoCloseable, UpdatesListener {
 
     @Override
     public int process(List<Update> updates) {
-        updates.stream().map(userMessageProcessor::process).forEach(this::execute);
+        updates.stream()
+            .peek(update -> BotProcessorMetric.incrementHandledMessageCount())
+            .map(userMessageProcessor::process)
+            .forEach(this::execute);
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
 
